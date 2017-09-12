@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Trainz</title>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/4.3.1/firebase.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js"></script>
+
+<script src="assets/JS/train-app.js"></script>
+
+</head>
+<body>
+	<div class="jumbotron text-center">
+  		<h1>Schedule Your Train</h1>
+  		<img src="assets/Images/thomas-tank-engine-chug-life.jpg">
+	</div>
+
+<table class="table">
+  <thead class="thead-inverse">
+    <tr>
+      <th>Train Name</th>
+      <th>Destination</th>
+      <th>Frequency in Min</th>
+      <th>Next Arrival</th>
+      <th>Minutes Away</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+
+	</div>
+	  <div class="card">
+	  <div class="card-body">
+	    <h4 class="card-title">Add Train</h4>
+		<form>
+	  		<div class="form-group">
+	    		<label for="name">Train Name</label>
+	    		<input type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Enter name">
+	  		</div>
+	  		<div class="form-group">
+	    		<label for="role">Destination</label>
+	    		<input type="text" class="form-control" id="role" aria-describedby="emailHelp" placeholder="Enter destination">
+	  		</div>
+	  		<div class="form-group">
+	    		<label for="date">First Train Time</label>
+	    		<input type="text" class="form-control" id="date" aria-describedby="emailHelp" placeholder="Enter time like hh:mm">
+	  		</div>
+	  		<div class="form-group">
+	    		<label for="rate">Frequency in Min</label>
+	    		<input type="text" class="form-control" id="rate" aria-describedby="emailHelp" placeholder="Enter frequency in minutes">
+	  		</div>
+			<button id="submit" class="btn btn-dark">Submit</button>
+		</form>
+	    
+	  </div>
+
+	
+</body>
+</html>
