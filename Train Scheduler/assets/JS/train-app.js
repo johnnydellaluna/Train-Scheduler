@@ -1,16 +1,33 @@
  $(document).ready(function() {
   console.log("am i working")
 
- // Initialize Firebase
+  // Initialize Firebase
   var config = {
-    apiKey: "AIzaSyA3r-pdioP_sfPT10JJxWLi7WuC3wPz-y0",
-    authDomain: "my-awesome-project-ea93d.firebaseapp.com",
-    databaseURL: "https://my-awesome-project-ea93d.firebaseio.com",
-    projectId: "my-awesome-project-ea93d",
-    };
+    apiKey: "AIzaSyDl_FlkwOUb0Mv-vOS0Jvw0wfp00g_FjcM",
+    authDomain: "train-scheduler-5279d.firebaseapp.com",
+    databaseURL: "https://train-scheduler-5279d.firebaseio.com",
+    projectId: "train-scheduler-5279d",
+    storageBucket: "",
+    messagingSenderId: "635712118474"
+  };
   firebase.initializeApp(config);
 
   var database = firebase.database();
+
+  // Use moment.js to know current time
+
+  var currentTime = moment();
+    console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
+
+  // Get the frequency from the form the user filled out. 
+
+  var frequency;
+
+  // Get the first train time from the form the user filled out.
+
+  var firstTrain;
+
+  
 
   $("#submit").on("click", function (event) {
     event.preventDefault();
@@ -19,10 +36,9 @@
           // Code for handling the push
       database.ref().push({
         name: $("#name").val().trim(),
-        role: $("#role").val().trim(),
-        date: $("#date").val().trim(),
-        rate: $("#rate").val().trim(),
-        dateAdded: firebase.database.ServerValue.TIMESTAMP
+        destination: $("#destination").val().trim(),
+        firsttime: $("#first-time").val().trim(),
+        frequency: $("#frequency").val().trim(),
       });
 
 
@@ -33,14 +49,17 @@
   })
 
         database.ref().on("child_added", function(snapshot) {
-          var monthsWorked = time(snapshot.val().date);
+          // Come up with value for next arrival and minutes away
+          var nextArrival;
 
+          var minutesAway;
+
+          // Write to the table body rows of information the user puts in.
           var newRow = "<tr> <td>" + snapshot.val().name + "</td>";
-          newRow += "<td>" + snapshot.val().role + "</td>";
-          newRow += "<td>" + snapshot.val().date + "</td>";
-          newRow += "<td>" + monthsWorked + "</td>";
-          newRow += "<td>" + snapshot.val().rate + "</td>";
-          newRow += "<td>" + (snapshot.val().rate * monthsWorked) + "</td> </tr>";
+          newRow += "<td>" + snapshot.val().destination + "</td>";
+          newRow += "<td>" + snapshot.val().frequency + "</td>";
+          newRow += "<td>" + nextArrival + "</td>";
+          newRow += "<td>" + minutesAway + "</td>";
 
         $("#tbody").html($("#tbody").html() + newRow);
 
@@ -51,12 +70,10 @@
 
       })
 
+        // Include moment.js time conversions to determine the two time variables
 
         function time (date) {
-          moment(date, "MM.DD.YYYY").fromNow();
-          console.log(moment(date, "MM.DD.YYYY").fromNow());
-          console.log(date)
-          return Math.abs(moment(date).diff(moment(), "months"));
+          
 
 
 
