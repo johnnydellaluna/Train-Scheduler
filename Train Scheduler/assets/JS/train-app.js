@@ -1,5 +1,4 @@
  $(document).ready(function() {
-  console.log("am i working")
 
   // Initialize Firebase
   var config = {
@@ -10,22 +9,10 @@
     storageBucket: "",
     messagingSenderId: "635712118474"
   };
+
   firebase.initializeApp(config);
 
   var database = firebase.database();
-
-  // Use moment.js to know current time
-
-  var currentTime = moment();
-    console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
-
-  // Get the frequency from the form the user filled out. 
-
-  var frequency;
-
-  // Get the first train time from the form the user filled out.
-
-  var firstTrain;
 
   
 
@@ -42,24 +29,50 @@
       });
 
 
-
-
-
-
-  })
+  });
 
         database.ref().on("child_added", function(snapshot) {
           // Come up with value for next arrival and minutes away
-          var nextArrival;
+              // Get the frequency from the form the user filled out. 
 
-          var minutesAway;
+  var frequency = $("#frequency").val();
+    console.log(frequency)
+
+  // Get the first train time from the form the user filled out.
+
+  var firstTime = $("#first-time").val();
+    console.log(firstTime)
+
+  // First Time (pushed back 1 year to make sure it comes before current time)
+  var firstTimeConverted = moment(firstTime, "hh:mm").subtract(1, "years");
+  console.log(firstTimeConverted);
+
+  // Current Time
+  var currentTime = moment();
+  console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
+
+  // Difference between the times
+  var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
+  console.log("DIFFERENCE IN TIME: " + diffTime);
+
+  // Time apart (remainder)
+  var tRemainder = diffTime % frequency;
+  console.log(tRemainder);
+
+  // Minute Until Train
+  var tMinutesTillTrain = frequency - tRemainder;
+  console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
+
+  // Next Train
+  var nextTrain = moment().add(tMinutesTillTrain, "minutes");
+  console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
 
           // Write to the table body rows of information the user puts in.
           var newRow = "<tr> <td>" + snapshot.val().name + "</td>";
           newRow += "<td>" + snapshot.val().destination + "</td>";
           newRow += "<td>" + snapshot.val().frequency + "</td>";
-          newRow += "<td>" + nextArrival + "</td>";
-          newRow += "<td>" + minutesAway + "</td>";
+          newRow += "<td>" + nextTrain + "</td>";
+          newRow += "<td>" + tMinutesTillTrain + "</td>";
 
         $("#tbody").html($("#tbody").html() + newRow);
 
@@ -68,18 +81,6 @@
 
 
 
-      })
+      });
 
-        // Include moment.js time conversions to determine the two time variables
-
-        function time (date) {
-          
-
-
-
-
-
-
-
-        }
 })
