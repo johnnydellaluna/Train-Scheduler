@@ -45,7 +45,7 @@
 
   // First Time (pushed back 1 year to make sure it comes before current time)
   var firstTimeConverted = moment(firstTime, "hh:mm").subtract(1, "years");
-  console.log(firstTimeConverted);
+  console.log("First Time Converted: " + firstTimeConverted);
 
   // Current Time
   var currentTime = moment();
@@ -76,7 +76,7 @@
 
         $("#tbody").html($("#tbody").html() + newRow);
 
-
+// HERE - recognizing something is up where the unix time is not being converted properly. Minutes to arrival works, but not on page refresh.
 
 
 
